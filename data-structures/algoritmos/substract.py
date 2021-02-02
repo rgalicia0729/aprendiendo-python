@@ -6,6 +6,9 @@ def substract_algorithm(x, y):
     if x > y:
         for _ in range(y, x):
             result += 1
+    else:
+        for _ in range(x, y):
+            result += 1
 
     return result
 
