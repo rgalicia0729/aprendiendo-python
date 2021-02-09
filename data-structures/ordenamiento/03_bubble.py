@@ -1,6 +1,10 @@
+from time import time
+
 
 def ascending_order(data):
     # Algoritmo de ordenamiento bubble de forma ascendente
+    tiempo_inicial = time()
+
     rounds = 0
     organized = False
 
@@ -12,14 +16,19 @@ def ascending_order(data):
                 data[i], data[i + 1] = data[i + 1], data[i]
                 organized = False
 
-        print(data)
         rounds += 1
+
+    tiempo_final = time()
+    tiempo_ejecucion = (tiempo_final - tiempo_inicial) * 1000
+    print(f'\nEl tiempo de ejecución es: {tiempo_ejecucion} segundos')
 
     return data
 
 
 def descending_order(data):
     # Algoritmo de ordenamiento bubble de forma descendente
+    tiempo_inicial = time()
+
     rounds = 0
     organized = False
 
@@ -31,14 +40,18 @@ def descending_order(data):
                 data[i], data[i + 1] = data[i + 1], data[i]
                 organized = False
 
-        print(data)
         rounds += 1
+
+    tiempo_final = time()
+    tiempo_ejecucion = (tiempo_final - tiempo_inicial) * 1000
+    print(f'\nEl tiempo de ejecución es: {tiempo_ejecucion} segundos')
 
     return data
 
 
 if __name__ == '__main__':
-    data = [-3, 2, 7, 1, 5, 0, 4, 3, 8, -1, 2, 4, 6, 9, 10, 2, -2]
+    data = [-3, 2, 7, 1, 5, 0, 4, 3, 8, -1, 2, 4, 6, 9, 10, 2, -2, 25, 67, 89,
+            98, 111, 128, 4356, 18982, 45, 34, 55, 67, 54, 56, 23, 23, 67, 68, 90, 20]
 
     print(('-' * 25) + 'Entrada' + ('-' * 25))
     print(data)
