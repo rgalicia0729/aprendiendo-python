@@ -1,7 +1,5 @@
 from flask import Flask, jsonify, request
 
-app = Flask(__name__)
-
 stores = [
     {
         'id': 1,
@@ -16,17 +14,20 @@ stores = [
 ]
 
 
+app = Flask(__name__)
+
+
 @app.route('/store')
 def get_stores():
     # GET /store
     return jsonify({'stores': stores})
 
 
-@app.route('/store/<string:storeId>')
+@app.route('/store/<int:storeId>')
 def get_store_by_id(storeId):
     # GET /store/<string:storeId>
     for store in stores:
-        if store['id'] == int(storeId):
+        if store['id'] == storeId:
             return jsonify(store)
 
     return jsonify({'ok': False, 'message': 'Store not found'})
