@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_restful import Resource, Api, reqparse
+from flask_restful import Resource, Api, reqparse, request
 
 products = []
 
@@ -14,11 +14,10 @@ parser.add_argument('name', type=str)
 class Product(Resource):
     def get(self, productId):
         # Recurso para obtener los datos de un producto
-        for product in products:
-            if product['id'] == productId:
-                return product
+        product = next(
+            filter(lambda x: x['id'] == productId, products), None)
 
-        return {'ok': False, 'message': 'No se encontró el producto'}, 404
+        return product, 200 if product is not None else 400
 
     def put(self, productId):
         # Recurso para actualizar los dato de un producto
@@ -44,11 +43,14 @@ class Products(Resource):
 
     def post(self):
         # Recurso para agregar un nuevo producto
-        args = parser.parse_args()
+        body = request.get_json()
+
+        if next(filter(lambda x: x['id'] == int(body['id']), products), None):
+            return {'ok': False, 'message': f"An product with id {body['id']} already exists"}, 400
 
         new_product = {
-            'id': args.get('id'),
-            'name': args.get('name')
+            'id': int(body['id']),
+            'name': body['name']
         }
 
         products.append(new_product)
