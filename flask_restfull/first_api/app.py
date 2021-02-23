@@ -29,19 +29,15 @@ class Product(Resource):
     @jwt_required()
     def put(self, productId):
         # Recurso para actualizar los dato de un producto
-        args = parser.parse_args()
+        item = next(filter(lambda x: x['id'] == productId, products), None)
 
-        for i in range(len(products)):
-            if products[i]['id'] == productId:
-                new_product = {
-                    'id': products[i]['id'],
-                    'name': args.get('name')
-                }
-                products[i] = new_product
+        if item is None:
+            item = parser.parse_args()
+            products.append(item)
+        else:
+            item.update(parser.parse_args())
 
-                return new_product, 201
-
-        return {'ok': False, 'message': 'No se encontró el producto'}, 404
+        return item
 
     @jwt_required()
     def delete(self, productId):
